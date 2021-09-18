@@ -3,27 +3,35 @@ let create_array = (total, size) =>
 let number_random = (number) => Math.round(Math.random() * number);
 let mod = (dividend, divisor) =>
   Math.round(dividend - Math.floor(dividend / divisor) * divisor);
+
 document.addEventListener("DOMContentLoaded", function () {
   var generateButton = document.getElementById("generateButton");
+  var generateAndCopyButton = document.getElementById("generateAndCopyButton");
+
   generateButton.addEventListener("click", function () {
     generate();
   });
 
+  generateAndCopyButton.addEventListener("click", function () {
+    generateAndCopy();
+  });
+
   function generate() {
+    var isMasked = document.getElementById("mask").checked;
     var resultInput = document.getElementById("resultInput");
     resultInput.classList.remove("error");
     switch (getInputType()) {
       case "cpf":
-        resultInput.value = generateCpf();
+        resultInput.value = generateCpf(isMasked);
         break;
       case "cnpj":
-        resultInput.value = generateCnpj();
+        resultInput.value = generateCnpj(isMasked);
         break;
       case "phone":
-        resultInput.value = generatePhone();
+        resultInput.value = generatePhone(isMasked);
         break;
       case "credit_card":
-        resultInput.value = generateCreditCard();
+        resultInput.value = generateCreditCard(isMasked);
         break;
       default:
         resultInput.value = "Erro!";
@@ -31,12 +39,25 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  function generateAndCopy() {
+    generate();
+    var resultInput = document.getElementById("resultInput");
+    navigator.clipboard.writeText(resultInput.value).then(
+      function () {
+        /* clipboard successfully set */
+      },
+      function () {
+        /* clipboard write failed */
+      }
+    );
+  }
+
   function getInputType() {
     var inputType = document.getElementById("inputType");
     return inputType.value;
   }
 
-  function generateCpf() {
+  function generateCpf(masked = false) {
     let total_array = 9;
     let n = 9;
     let [n1, n2, n3, n4, n5, n6, n7, n8, n9] = create_array(total_array, n);
@@ -65,10 +86,14 @@ document.addEventListener("DOMContentLoaded", function () {
       n1 * 11;
     d2 = 11 - mod(d2, 11);
     if (d2 >= 10) d2 = 0;
+
+    if (masked) {
+      return `${n1}${n2}${n3}.${n4}${n5}${n6}.${n7}${n8}${n9}-${d1}${d2}`;
+    }
     return `${n1}${n2}${n3}${n4}${n5}${n6}${n7}${n8}${n9}${d1}${d2}`;
   }
 
-  function generateCnpj() {
+  function generateCnpj(masked = false) {
     let total_array = 8;
     let n = 9;
     let [n1, n2, n3, n4, n5, n6, n7, n8] = create_array(total_array, n);
@@ -110,6 +135,9 @@ document.addEventListener("DOMContentLoaded", function () {
     d2 = 11 - mod(d2, 11);
     if (d2 >= 10) d2 = 0;
 
+    if (masked) {
+      return `${n1}${n2}.${n3}${n4}${n5}.${n6}${n7}${n8}/${n9}${n10}${n11}${n12}-${d1}${d2}`;
+    }
     return `${n1}${n2}${n3}${n4}${n5}${n6}${n7}${n8}${n9}${n10}${n11}${n12}${d1}${d2}`;
   }
 

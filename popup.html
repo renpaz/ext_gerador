@@ -4,17 +4,20 @@
     <meta charset="UTF-8" />
     <title>Launch Generator</title>
     <script src="popup.js"></script>
-    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
     <h1>Gerador</h1>
-    <select name="" id="inputType">
+    <select id="inputType">
       <option value="cpf">CPF</option>
       <option value="cnpj">CNPJ</option>
-      <option value="phone">Telefone</option>
-      <option value="credit_card">Cartão de Crédito</option>
+      <option disabled value="phone">Telefone</option>
+      <option disabled value="credit_card">Cartão de Crédito</option>
     </select>
-    <input type="text" name="" id="resultInput" /> <br />
+    <input type="text" id="resultInput" /> <br />
+    <input type="checkbox" id="mask" />
+    <label>Máscara</label><br />
     <button id="generateButton">Gerar!</button>
+    <button id="generateAndCopyButton">Gerar & Copiar!</button>
   </body>
 </html>
