@@ -1,0 +1,11 @@
+{
+  "manifest_version": 2,
+
+  "name": "Launch Generator",
+  "description": "Gerador de CPF, CNPJ, Telefone e Cartão de Crédito para desenvolvedores",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_popup": "popup.html"
+  }
+}
